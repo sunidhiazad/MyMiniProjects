@@ -5,10 +5,21 @@ function Question(title,choices,correctAns,category){
 	this.category=category;
 }
 
+Question.prototype.getQuestionText = function(){
+	return this.title+' ['+this.choices+'] ';
+}
+
 function Player(pName){
 	this.pName=pName;
 	this.correctScore=0;
 	this.wrongScore=0;
+	this.questionsAsked=[];
+	this.scoreCard=[];
+}
+
+function ScoreItem(category,isCorrect){
+	this.category=category;
+	this.isCorrect=isCorrect;
 }
 
 function Trivial(){
@@ -28,7 +39,7 @@ Trivial.prototype.setPlayers = function(){
 	var howManyPlayers = window.prompt('How many players want to play?');
 	var playerName;
 	for (var i = 0; i < howManyPlayers; i++) {
-		playerName = window.prompt('Enter name for Player#',i);
+		playerName = window.prompt('Enter name for Player#'+i);
 		this.addPlayer(new Player(playerName));
 	}
 }
@@ -41,33 +52,42 @@ Trivial.prototype.play = function(){
 
 		for (var i = 0; i < totalPlayers; i++) {
 			var currQues=this.questionList[totalQuestionsToAsk-1];
+			var currentScore;
 
-			message=message.concat('Question for',this.playerList[i].pName,': ');
-			message=message.concat(currQues.title,': ',currQues.choices);
+			this.playerList[i].questionsAsked.push(currQues);
+
+			message='Question for' + this.playerList[i].pName + ': ' + currQues.getQuestionText();
 
 			console.log('Question#',totalQuestionsToAsk,message)
 
 			if(currQues.category == 'Binary'){
 				var result = window.confirm(message);
-				if(result !== null){
-					if(result == currQues.correctAns){
+				if(result == currQues.correctAns){
 					this.playerList[i].correctScore++;
-				}
-					else{
+					currentScore = new ScoreItem(currQues.category,true);
+					console.log('Hurrah! You are right! -->',result);
+				}else{
 					this.playerList[i].wrongScore++;
+					currentScore = new ScoreItem(currQues.category,false);
+					console.log('Oops! Wrong Answer! -->',result);
 				}	
-			}
 			}else{
 				var result = window.prompt(message);
 				if(result !== null){
 					if(result.toUpperCase() === currQues.correctAns){
 						this.playerList[i].correctScore++;
-					}
-				else{
-					this.playerList[i].wrongScore++;
+						currentScore = new ScoreItem(currQues.category,true);
+						console.log('Hurrah! You are right! -->',result);
+					}else{
+						this.playerList[i].wrongScore++;
+						currentScore = new ScoreItem(currQues.category,false);
+						console.log('Oops! Wrong Answer! -->',result);
 					}	
+				}else{
+					console.log('No answer given for this one!');
 				}
 			}
+			this.playerList[i].scoreCard.push(currentScore);
 			message='';
 			totalQuestionsToAsk--;
 		}	
@@ -79,6 +99,43 @@ Trivial.prototype.printScore = function(){
 	for (var i = 0; i < this.playerList.length; i++) {
 		var player = this.playerList[i];
 		console.log('Player:',player.pName,'Score:',player.correctScore,'/',player.correctScore+player.wrongScore);
+	}
+}
+
+Trivial.prototype.printScoreByCategory = function(){
+	console.log('Printing scores by category...');
+
+	var player;
+	var categories=[];
+	var corrects = 0;
+	var wrongs = 0;
+
+	for (var i = 0; i < this.playerList.length; i++) {
+		player = this.playerList[i];
+		console.log('Score of',player.pName);
+		// Get all the categories from the score
+		for (var j = 0; j < player.scoreCard.length; j++) {
+			if(categories.indexOf(player.scoreCard[j].category) < 0){
+				categories.push(player.scoreCard[j].category);
+			}
+		}
+
+		for (var k = 0; k < categories.length; k++) {
+			
+			for (var l = 0; l < player.scoreCard.length; l++) {
+
+				if(player.scoreCard[l].category === categories[k]){
+					if(player.scoreCard[l].isCorrect)
+						corrects++;
+					else
+						wrongs++;
+				}
+			}
+			console.log('Category:',categories[k],'--> Score:',corrects,'/',corrects+wrongs);
+			corrects = 0;
+			wrongs = 0;
+		}
+		categories = [];
 	}
 }
 
@@ -109,6 +166,9 @@ var question20 = new Question('Which is not a programming language', ['A - Ruby'
 var question21 = new Question('Are you a male?', ['Y - Yes', 'N - No'], true, 'Binary');
 var question22 = new Question('Are you a male?', ['Y - Yes', 'N - No'], false, 'Binary');
 
+var question23 = new Question('Where is Monalisa?', ['A - Paris', 'B - Rome'], 'A', 'Arts');
+var question24 = new Question('Is Mozart spanish?', ['A - Yes', 'B - No'], 'B', 'Arts');
+
 var player1 = new Player('Amy');
 var player2 = new Player('Bob');
 
@@ -135,9 +195,13 @@ trivObj.addQuestion(question19);
 trivObj.addQuestion(question20);
 trivObj.addQuestion(question21);
 trivObj.addQuestion(question22);
+trivObj.addQuestion(question23);
+trivObj.addQuestion(question24);
 
-trivObj.addPlayer(player1);
-trivObj.addPlayer(player2);
+//trivObj.addPlayer(player1);
+//trivObj.addPlayer(player2);
+trivObj.setPlayers();
 
 trivObj.play();
 trivObj.printScore();
+trivObj.printScoreByCategory();
