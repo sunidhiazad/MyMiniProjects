@@ -5,15 +5,12 @@ function Question(title,choices,correctAns,category){
 	this.category=category;
 }
 
-Question.prototype.getQuestionText = function(){
+Question.prototype.toString = function(){
 	return this.title+' ['+this.choices+'] ';
 }
 
 function Player(pName){
 	this.pName=pName;
-	this.correctScore=0;
-	this.wrongScore=0;
-	this.questionsAsked=[];
 	this.scoreCard=[];
 }
 
@@ -48,46 +45,66 @@ Trivial.prototype.play = function(){
 	var totalPlayers=this.playerList.length;
 	var totalQuestionsToAsk= this.questionList.length;
 	var message='';
+	
+	// While all the questions have been asked
 	while(totalQuestionsToAsk>0){
 
+		// Alternate questions between all the players
 		for (var i = 0; i < totalPlayers; i++) {
 			var currQues=this.questionList[totalQuestionsToAsk-1];
 			var currentScore;
 
-			this.playerList[i].questionsAsked.push(currQues);
-
-			message='Question for' + this.playerList[i].pName + ': ' + currQues.getQuestionText();
+			message='Question for ' + this.playerList[i].pName + ': ' + currQues.toString();
 
 			console.log('Question#',totalQuestionsToAsk,message)
 
 			if(currQues.category == 'Binary'){
-				var result = window.confirm(message);
-				if(result == currQues.correctAns){
-					this.playerList[i].correctScore++;
+
+				var binResult = window.confirm(message);
+
+				if(binResult == currQues.correctAns){
+
 					currentScore = new ScoreItem(currQues.category,true);
-					console.log('Hurrah! You are right! -->',result);
+					console.log('Hurrah! You are right! -->',binResult);
+
 				}else{
-					this.playerList[i].wrongScore++;
+
 					currentScore = new ScoreItem(currQues.category,false);
-					console.log('Oops! Wrong Answer! -->',result);
+					console.log('Oops! Wrong Answer! --> You said',binResult,'Correct option is',currQues.correctAns);
+
 				}	
+
+				this.playerList[i].scoreCard.push(currentScore);
+				binResult=null;
+
 			}else{
-				var result = window.prompt(message);
-				if(result !== null){
-					if(result.toUpperCase() === currQues.correctAns){
-						this.playerList[i].correctScore++;
+
+				var promptResult = window.prompt(message);
+
+				if(promptResult !== ''){
+
+					if(promptResult.toUpperCase() === currQues.correctAns){
+
 						currentScore = new ScoreItem(currQues.category,true);
-						console.log('Hurrah! You are right! -->',result);
+						console.log('Hurrah! You are right! -->',promptResult.toUpperCase());
+
 					}else{
-						this.playerList[i].wrongScore++;
+
 						currentScore = new ScoreItem(currQues.category,false);
-						console.log('Oops! Wrong Answer! -->',result);
+						console.log('Oops! Wrong Answer! --> You said',promptResult.toUpperCase(),'Correct option is',currQues.correctAns);
+
 					}	
+
+					this.playerList[i].scoreCard.push(currentScore);
+					promptResult = null;
+
 				}else{
-					console.log('No answer given for this one!');
+
+					console.log('No answer given for this one! -->','Correct option is',currQues.correctAns);
+
 				}
 			}
-			this.playerList[i].scoreCard.push(currentScore);
+			
 			message='';
 			totalQuestionsToAsk--;
 		}	
@@ -96,9 +113,22 @@ Trivial.prototype.play = function(){
 
 Trivial.prototype.printScore = function(){
 	console.log('Printing scores...');
+	var corrects = 0;
+	var wrongs = 0;
+
 	for (var i = 0; i < this.playerList.length; i++) {
 		var player = this.playerList[i];
-		console.log('Player:',player.pName,'Score:',player.correctScore,'/',player.correctScore+player.wrongScore);
+
+		for (var j = 0; j < player.scoreCard.length; j++) {
+			if(player.scoreCard[j].isCorrect)
+				corrects++;
+			else 
+				wrongs++;
+		}
+
+		console.log('Player:',player.pName,'Score:',corrects,'/',corrects+wrongs);
+		corrects = 0;
+		wrongs = 0;
 	}
 }
 
@@ -198,9 +228,9 @@ trivObj.addQuestion(question22);
 trivObj.addQuestion(question23);
 trivObj.addQuestion(question24);
 
-//trivObj.addPlayer(player1);
-//trivObj.addPlayer(player2);
-trivObj.setPlayers();
+trivObj.addPlayer(player1);
+trivObj.addPlayer(player2);
+//trivObj.setPlayers();
 
 trivObj.play();
 trivObj.printScore();
