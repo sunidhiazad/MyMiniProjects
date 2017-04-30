@@ -8,8 +8,12 @@ function isStringFunction(arg){
 
 // Test Cases 1
 TapeTest( 'Check if the input is string', function( assert ) {
-  assert.equal( isStringFunction('Hello'),DataType.isString('Hello'), 'Yes, it is a string' ) ;
-  assert.true( isStringFunction('My world'+12), 'Yes, it is a string' ) ;
+  assert.true( isStringFunction('My world'), 'Yes, it is a string' ) ;
+  assert.true( isStringFunction(''), 'Yes, it is a string' ) ;
+  assert.true( isStringFunction('12'), 'Yes, it is a string' ) ;
+  assert.false( isStringFunction(null), 'No, it is not a string' ) ;
+  assert.false( isStringFunction(undefined), 'No, it is not a string' ) ;
+  assert.false( isStringFunction(), 'No, it is not a string' ) ;
   assert.false( isStringFunction(911), 'No, it is not a string' ) ;
   assert.end() ;
 } ) ;
@@ -23,6 +27,9 @@ function isArrayFunction(arg){
 TapeTest( 'Check if the input is an array', function( assert ) {
   assert.true( isArrayFunction([1,2,3]), 'Yes, it is an array' ) ;
   assert.false( isArrayFunction({}), 'No, it is not an array' ) ;
+  assert.true( isArrayFunction([]), 'Yes, it is an array' ) ;
+  assert.true( isArrayFunction([[[]]]), 'Yes, it is an array' ) ;
+  assert.true( isArrayFunction(['hello']), 'Yes, it is an array' ) ;
   assert.end() ;
 } ) ;
 
@@ -47,9 +54,12 @@ function areSameType(variable){
 }
 
 // Test Cases 3
-TapeTest( 'Check if all elements', function( assert ) {
-  assert.true( isArrayFunction([1,2,3]), 'Yes, it is an array' ) ;
-  assert.false( isArrayFunction({}), 'No, it is not an array' ) ;
+TapeTest( 'Check if all elements in an array are same', function( assert ) {
+  assert.true( areSameType([1,2,3]), 'Yes, all elements are of the same data type' ) ;
+  assert.true( areSameType([[1],[2],[3]]), 'Yes, all elements are of the same data type' ) ;
+  assert.true( areSameType([]), 'Yes, all elements are of the same data type' ) ;
+  assert.false( areSameType([1,2,'hello']), 'No, all elements are not of the same data type' ) ;
+  assert.false( areSameType([[],{}]), 'No, all elements are not of the same data type' ) ;
   assert.end() ;
 } ) ;
 
@@ -85,6 +95,9 @@ TapeTest( 'Longest character string', function( assert ) {
 
 // Exercise 5
 function convert(number){
+	if(number === 0){
+		return [0];
+	}
 	var digitArray=[];
 	var digit;
 	while(number!==0){
@@ -100,6 +113,9 @@ TapeTest( 'Convert number into decreasing order array', function( assert ) {
   assert.deepEqual( convert(429563),[9,6,5,4,3,2], 'Yes, it is correct' ) ;
   assert.deepEqual( convert(324),[4,3,2], 'Yes, it is correct'  ) ;
   assert.deepEqual( convert(918273),[9,8,7,3,2,1], 'Yes, it is correct'  ) ;
+  assert.deepEqual( convert(125000),[5,2,1,0,0,0], 'Yes, it is correct'  ) ;
+  //assert.deepEqual( convert(-125),[5,2,1], 'Yes, it is correct'  ) ;
+  assert.deepEqual( convert(0),[0], 'Yes, it is correct'  ) ;
   assert.end() ;
 } ) ;
 
@@ -120,6 +136,7 @@ function countRepetitions(inputArray){
 TapeTest( 'Count repetition', function( assert ) {
   assert.deepEqual( countRepetitions(['kerouac', 'fante', 'fante', 'buk', 'hemingway', 'hornby', 'kerouac', 'buk', 'fante']),{kerouac:2, fante:3, buk:2, hemingway:1, hornby:1}, 'Yes, it is correct' ) ;
   assert.deepEqual( countRepetitions(['abc', 'sahil', 'abc', 'richu', 'abc', 'xyz', 'whats', 'xyz', 'whats']),{abc:3, sahil:1, xyz:2, richu:1, whats:2}, 'Yes, it is correct'  ) ;
+  assert.deepEqual( countRepetitions([]),{}, 'Yes, it is correct'  ) ;
   assert.end() ;
 } ) ;
 
@@ -145,6 +162,7 @@ TapeTest( 'Cat catches mouse', function( assert ) {
   assert.false( isCaught('C.....m'), 'Cat does not catch mouse' ) ;
   assert.true( isCaught('C..m'), 'Cat catches up to mouse' ) ;
   assert.true( isCaught('..C..m'), 'Cat catches up to mouse' ) ;
+  assert.false( isCaught(''), 'Cat does not catch mouse' ) ;
   assert.end() ;
 } ) ;
 
@@ -172,6 +190,9 @@ function splitTheBill(group){
 // Test Cases 8
 TapeTest( 'Split the Bill', function( assert ) {
   assert.deepEqual( splitTheBill({ Amy: 20, Bill: 15, Chris: 10}),{ Amy: -5, Bill: 0, Chris: 5 }, 'Yes, it is correct' ) ;
+  assert.deepEqual( splitTheBill({ Amy: 20, Bill: 20, Chris: 20}),{ Amy: 0, Bill: 0, Chris: 0 }, 'Yes, it is correct' ) ;
+  assert.deepEqual( splitTheBill({ Amy: 0, Bill: 0, Chris: 0}),{ Amy: 0, Bill: 0, Chris: 0 }, 'Yes, it is correct' ) ;
+  assert.deepEqual( splitTheBill({ Amy: -30, Bill: -30, Chris: 30}),{ Amy: 20, Bill: 20, Chris: -40 }, 'Yes, it is correct' ) ;
   assert.end() ;
 } ) ;
 
