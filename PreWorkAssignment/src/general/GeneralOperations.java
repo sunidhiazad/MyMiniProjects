@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GeneralOperations {
 
@@ -63,6 +64,17 @@ public class GeneralOperations {
 	}
 	
 	public static <T> void printList(List<T> list){
+		StringBuilder build = new StringBuilder("[");
+	    for(T element: list){
+	       build.append(element);
+	       build.append(",");
+	    }
+	    build.deleteCharAt(build.length()-1);
+	    build.append("]");
+	    System.out.println(build.toString());
+	}
+	
+	public static <T> void printSet(Set<T> list){
 		StringBuilder build = new StringBuilder("[");
 	    for(T element: list){
 	       build.append(element);
