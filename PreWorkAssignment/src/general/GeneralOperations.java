@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -12,12 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class GeneralOperations {
-
-	public static void main(String[] args) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("key ", "value");
-		printMap(map);
-	}
 
 	public static <T> void displayCollection(Collection<T> list) {
 		System.out.println("***** PRINTING LIST *****");
@@ -69,6 +62,28 @@ public class GeneralOperations {
 		}
 	}
 	
+	public static <T> void printList(List<T> list){
+		StringBuilder build = new StringBuilder("[");
+	    for(T element: list){
+	       build.append(element);
+	       build.append(",");
+	    }
+	    build.deleteCharAt(build.length()-1);
+	    build.append("]");
+	    System.out.println(build.toString());
+	}
+	
+	public static <T> String convertListToString(List<T> list){
+		StringBuilder build = new StringBuilder("[");
+	    for(T element: list){
+	       build.append(element);
+	       build.append(",");
+	    }
+	    build.deleteCharAt(build.length()-1);
+	    build.append("]");
+	    return build.toString();
+	}
+	
 	public static <T> void printArray(T[] arr){
 	    for(T t: arr){
 	       System.out.print(t+" ");
@@ -76,8 +91,8 @@ public class GeneralOperations {
 	    System.out.println("");
 	}
 
-	public static void swap(int i, int j, Integer[] array) {
-		int temp;
+	public static <T> void swap(int i, int j, T[] array) {
+		T temp;
 		temp = array[i];
 		array[i] = array[j];
 		array[j] = temp;

@@ -1,15 +1,14 @@
-package sorting;
+package algorithms;
 
 import general.GeneralOperations;
 
-public class BubbleSort {
+public class SelectionSort {
 
 	private static Integer[] sort(Integer[] array) {
-		for (int j = 0; j < array.length; j++) {
-			for (int i = 0; i < array.length - 1; i++) {
-				if (array[i] > array[i + 1]) {
-					GeneralOperations.swap(i, i + 1, array);
-				}
+		for (int i = 0; i < array.length - 1; i++) {
+			for (int j = i+1; j < array.length; j++) {
+				if(array[i]>array[j])
+					GeneralOperations.swap(i, j, array);
 			}
 		}
 		return array;
@@ -19,5 +18,4 @@ public class BubbleSort {
 		Integer[] array = { 14, 33, 27, 35, 10, 7, 24 };
 		GeneralOperations.printArray(sort(array));
 	}
-
 }
