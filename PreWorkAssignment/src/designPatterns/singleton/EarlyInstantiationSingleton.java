@@ -1,4 +1,4 @@
-package designPatterns;
+package designPatterns.singleton;
 
 public class EarlyInstantiationSingleton {
 	// Automatically Thread Safe
