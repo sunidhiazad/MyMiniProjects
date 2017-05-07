@@ -37,7 +37,7 @@ public class StringReversal {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(reverseStringByCharsHalf("Hellot"));
+		System.out.println(reverseStringByCharsHalf("Let's take LeetCode contest"));
 		System.out.println(reverseStringByCharsLoop("Hellot"));
 		System.out.println(reverseStringByAPI("Hellot"));
 		System.out.println(reverseStringRecursively("Hellot"));
