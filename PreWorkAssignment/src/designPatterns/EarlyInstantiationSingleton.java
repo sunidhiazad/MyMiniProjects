@@ -1,6 +1,7 @@
 package designPatterns;
 
 public class EarlyInstantiationSingleton {
+	// Automatically Thread Safe
 	private static EarlyInstantiationSingleton instance = new EarlyInstantiationSingleton();
 
 	private EarlyInstantiationSingleton() {}
