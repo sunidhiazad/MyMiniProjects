@@ -9,16 +9,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GeneralOperations {
-
-	public static <T> void displayCollection(Collection<T> list) {
-		System.out.println("***** PRINTING LIST *****");
-		for (T item : list) {
-			System.out.println(item);
-		}
-	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Map sortMapByValue(Map unsortMap) {
@@ -57,50 +50,21 @@ public class GeneralOperations {
 	}
 
 	public static void printMap(Map<?, ?> map) {
-		System.out.println("***** PRINTING MAP *****");
 		for (Map.Entry<?, ?> entry : map.entrySet()) {
 			System.out.println(entry.getKey() + " " + entry.getValue());
 		}
 	}
-	
-	public static <T> void printList(List<T> list){
-		StringBuilder build = new StringBuilder("[");
-	    for(T element: list){
-	       build.append(element);
-	       build.append(",");
-	    }
-	    build.deleteCharAt(build.length()-1);
-	    build.append("]");
-	    System.out.println(build.toString());
+
+	public static <T> void printCollection(Collection<T> list) {
+		System.out.println(list.stream().map(s -> s.toString()).collect(Collectors.joining(", ")));
 	}
-	
-	public static <T> void printSet(Set<T> list){
-		StringBuilder build = new StringBuilder("[");
-	    for(T element: list){
-	       build.append(element);
-	       build.append(",");
-	    }
-	    build.deleteCharAt(build.length()-1);
-	    build.append("]");
-	    System.out.println(build.toString());
+
+	public static <T> String convertCollectionToDelimitedString(Collection<T> coll, String delimiter) {
+		return coll.stream().map(s -> s.toString()).collect(Collectors.joining(delimiter));
 	}
-	
-	public static <T> String convertListToString(List<T> list){
-		StringBuilder build = new StringBuilder("[");
-	    for(T element: list){
-	       build.append(element);
-	       build.append(",");
-	    }
-	    build.deleteCharAt(build.length()-1);
-	    build.append("]");
-	    return build.toString();
-	}
-	
-	public static <T> void printArray(T[] arr){
-	    for(T t: arr){
-	       System.out.print(t+" ");
-	    }
-	    System.out.println("");
+
+	public static <T> void printArray(T[] arr) {
+		System.out.println(Arrays.stream(arr).map(s -> s.toString()).collect(Collectors.joining(", ")));
 	}
 
 	public static <T> void swap(int i, int j, T[] array) {
@@ -109,5 +73,5 @@ public class GeneralOperations {
 		array[i] = array[j];
 		array[j] = temp;
 	}
-	
+
 }

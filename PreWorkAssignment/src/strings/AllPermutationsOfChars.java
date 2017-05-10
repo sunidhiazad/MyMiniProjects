@@ -78,7 +78,7 @@ public class AllPermutationsOfChars {
 	public static void main(String[] args) {
 		System.out.println("METHOD 1");
 		Set<String> list = permutation1("ABC");
-		GeneralOperations.printSet(list);
+		GeneralOperations.printCollection(list);
 		
 		System.out.println("METHOD 2");
 		permutation2("ABC");

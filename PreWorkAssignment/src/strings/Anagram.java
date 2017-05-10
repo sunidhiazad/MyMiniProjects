@@ -12,7 +12,7 @@ public class Anagram {
 		System.out.println(isAnagram3("hello", "hola"));
 	}
 
-	private static boolean isAnagram1(String string1, String string2) {
+	public static boolean isAnagram1(String string1, String string2) {
 		if (string1.length() != string2.length())
 			return false;
 
@@ -39,12 +39,12 @@ public class Anagram {
 	public static boolean isAnagram3(String string1, String string2) {
 		char[] characters = string1.toCharArray();
 		StringBuilder sbString2 = new StringBuilder(string2);
-		
+
 		for (char ch : characters) {
 			int index = sbString2.indexOf("" + ch);
 			if (index != -1) {
 				sbString2.deleteCharAt(index);
-			} else 
+			} else
 				return false;
 		}
 		return sbString2.length() == 0 ? true : false;
