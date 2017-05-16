@@ -1,6 +1,11 @@
-package designPatterns.factory;
+package designPatterns.factory.factories;
 
-public class ShapeFactory extends AbstractFactory{
+import designPatterns.factory.concrete.Circle;
+import designPatterns.factory.concrete.Rectangle;
+import designPatterns.factory.concrete.Triangle;
+import designPatterns.factory.interfaces.Shape;
+
+public class ShapeFactory {
 
 	public Shape getShape(String shapeType) {
 		if (shapeType == null) {
@@ -19,11 +24,4 @@ public class ShapeFactory extends AbstractFactory{
 		return null;
 	}
 
-	@Override
-	Color getColor(String color) {
-		return null;
-	}
-
-	
-	
 }

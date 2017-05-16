@@ -1,4 +1,6 @@
-package designPatterns.factory;
+package designPatterns.abstractFactory.concrete;
+
+import designPatterns.abstractFactory.interfaces.Shape;
 
 public class Rectangle implements Shape {
 

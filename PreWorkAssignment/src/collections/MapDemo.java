@@ -52,5 +52,13 @@ public class MapDemo {
 		demo.printMap();
 		demo.sortMapOnKeys();
 		demo.sortMapOnValues();
+		demo.putValues();
+	}
+
+	private void putValues() {
+		System.out.println("=======PUT======");
+		map.putIfAbsent("Rihanna1", 99);
+		map.merge("Rihanna2", 1, (a, b) -> a + b);
+		printMap();
 	}
 }

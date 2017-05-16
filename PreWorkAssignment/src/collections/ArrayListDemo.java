@@ -27,6 +27,12 @@ public class ArrayListDemo {
 		demo.iterateOverList();
 		demo.splitIterateOverList();
 		demo.useStreamsToIterate();
+		demo.removeElement();
+	}
+
+	private void removeElement() {
+		System.out.println("REMOVE");
+		//List list2 = list.stream().filter(s -> s.contains("yon")).collect(Collectors.toList());
 	}
 
 	private void useStreamsToIterate() {

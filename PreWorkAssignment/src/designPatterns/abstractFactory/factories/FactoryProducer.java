@@ -1,4 +1,6 @@
-package designPatterns.factory;
+package designPatterns.abstractFactory.factories;
+
+import designPatterns.abstractFactory.factories.ColorFactory;
 
 public class FactoryProducer {
 	public static AbstractFactory getFactory(String choice) {

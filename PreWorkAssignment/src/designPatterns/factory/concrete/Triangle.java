@@ -1,4 +1,6 @@
-package designPatterns.factory;
+package designPatterns.factory.concrete;
+
+import designPatterns.factory.interfaces.Shape;
 
 public class Triangle implements Shape {
 

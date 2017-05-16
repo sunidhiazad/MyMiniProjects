@@ -1,4 +1,9 @@
-package designPatterns.factory;
+package designPatterns.abstractFactory.demo;
+
+import designPatterns.abstractFactory.factories.AbstractFactory;
+import designPatterns.abstractFactory.factories.FactoryProducer;
+import designPatterns.abstractFactory.interfaces.Color;
+import designPatterns.abstractFactory.interfaces.Shape;
 
 public class AbstractFactoryPatternDemo {
 	public static void main(String[] args) {

@@ -1,4 +1,7 @@
-package designPatterns.factory;
+package designPatterns.factory.demo;
+
+import designPatterns.factory.factories.ShapeFactory;
+import designPatterns.factory.interfaces.Shape;
 
 public class FactoryPatternDemo {
 
